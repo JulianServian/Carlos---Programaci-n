@@ -1,0 +1,1 @@
+console.log("Player script cargado");
