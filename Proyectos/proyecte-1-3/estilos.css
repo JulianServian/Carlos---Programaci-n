@@ -5,13 +5,14 @@
 .fila {
   display: flex;
 }
+
 .celula {
   width: 10px;
   height: 10px;
   border: 1px solid #ccc;
 }
 .viva {
-  background-color: green;
+  background-color: rgb(255, 255, 255);
 }
 .muerta {
   background-color: black;

@@ -1,16 +1,16 @@
 //Dibujar 
-export function dibuixaUnivers(matriu) {
-  let univers = '<div class="univers">';
-  for (let i = 0; i < matriu.length; i++) {
-    univers += '<div class="fila">';
-    for (let j = 0; j < matriu[i].length; j++) {
-      let estat = matriu[i][j] ? 'viva' : 'muerta';
-      univers += '<div class="celula ' + estat + '" data-id="' + i + '-' + j + '"></div>';
+export function dibuixaUniversAmbEstat(matriu) {
+    let univers = '<div class="univers">';
+    for (let i = 0; i < matriu.length; i++) {
+        univers += '<div class="fila">';
+        for (let j = 0; j < matriu[i].length; j++) {
+            let estat = matriu[i][j] ? 'viva' : 'muerta';
+            univers += `<div class="celula ${estat}" data-id="${i}-${j}"></div>`;
+        }
+        univers += '</div>';
     }
     univers += '</div>';
-  }
-  univers += '</div>';
-  document.body.innerHTML += univers;
+    document.querySelector("#univers-container").innerHTML += univers;
 }
 
 // Funció aleatori()
@@ -37,7 +37,7 @@ export function crearMatriz(filas, columnas) {
     for (let i = 0; i < filas; i++) {
         let fila = [];
         for (let j = 0; j < columnas; j++) {
-            fila.push(aleatori());
+            fila.push(aleatori()); 
         }
         matriz.push(fila);
     }
@@ -63,7 +63,7 @@ export function comptarVeinsVius(matriu, x, y) {
 
         // Comprovem que la nova posició estigui dins de la matriu
         if (nx >= 0 && nx < matriu.length && ny >= 0 && ny < matriu[0].length) {
-            if (matriu[nx][ny] === 1) {
+            if (matriu[nx][ny] === true) {
                 comptador++;
             }
         }
@@ -71,18 +71,6 @@ export function comptarVeinsVius(matriu, x, y) {
 
     return comptador;
 }
-
-// Ejemplo de matriz para probar comptarVeinsVius
-let matriu = [
-    [0, 1, 0],
-    [1, 1, 0],
-    [0, 0, 1]
-];
-
-// Test
-console.log(comptarVeinsVius(matriu, 0, 0)); // 2
-console.log(comptarVeinsVius(matriu, 1, 1)); // 3
-console.log(comptarVeinsVius(matriu, 2, 2)); // 1
 
 // Funció evolucionarCelula
 export function evolucionarCelula(matriu, x, y) {

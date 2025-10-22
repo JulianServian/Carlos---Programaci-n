@@ -1,38 +1,55 @@
-import {dibuixaUnivers, aleatori, aleatoriPercentatge, crearMatriz} from './funciones.js';
+import {
+  crearMatriz,
+  dibuixaUniversAmbEstat,
+  crearMatriuEvolucionada,
+  copiarMatriu
+} from './funciones.js';
 
-// Testeo de la función de aleatori()
-let contadorTrue = 0;
-let contadorFalse = 0;
-let pruebas = 10000; 
+let files = 100;
+let columnes = 150;
+let univers = crearMatriz(files, columnes);
+let intervalId = null;
 
-for (let i = 0; i < pruebas; i++) {
-    if (aleatori()) {
-        contadorTrue++;
-    } else {
-        contadorFalse++;
-    }
+// Dibuja el universo inicial
+document.querySelector("#univers-container").innerHTML = '';
+dibuixaUniversAmbEstat(univers);
+
+// Actualiza el universo en cada generación
+function actualitzarUnivers() {
+  let novaGeneracio = crearMatriuEvolucionada(univers);
+  copiarMatriu(novaGeneracio, univers);
+  document.querySelector("#univers-container").innerHTML = '';
+  dibuixaUniversAmbEstat(univers);
 }
-console.log("True de la función aleatorio:", contadorTrue);
-console.log("False de la función aleatorio:", contadorFalse);
 
+// Botón Iniciar
+document.querySelector("#start").addEventListener("click", () => {
+  if (!intervalId) {
+    intervalId = setInterval(actualitzarUnivers, 500);
+  }
+});
 
-//testear la funció aleatoriPercentatge(percentatge)
-let percentatge = 30; 
-let contadorTruePercentatge = 0;
-let contadorFalsePercentatge = 0;
-let provesPercentatge = 10000; 
+// Botón Pausar
+document.querySelector("#pause").addEventListener("click", () => {
+  clearInterval(intervalId);
+  intervalId = null;
+});
 
-for (let i = 0; i < provesPercentatge; i++) {
-    if (aleatoriPercentatge(percentatge)) {
-        contadorTruePercentatge++;
-    } else {
-        contadorFalsePercentatge++;
-    }
-}
-console.log("Percentatge:", percentatge + "%");
-console.log("True de funcion AleatoriPercentatge:", contadorTruePercentatge);
-console.log("False de funcion AleatoriPercentatge:", contadorFalsePercentatge);
+// Botón Reiniciar
+document.querySelector("#reset").addEventListener("click", () => {
+  clearInterval(intervalId);
+  intervalId = null;
+  univers = crearMatriz(files, columnes);
+  document.querySelector("#univers-container").innerHTML = '';
+  dibuixaUniversAmbEstat(univers);
+});
 
-
-let matriuInicial = crearMatriz(50, 50);
-dibuixaUnivers(matriuInicial);
+// Interacción: clic para cambiar estado de célula
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("celula")) {
+    let [x, y] = e.target.dataset.id.split("-").map(Number);
+    univers[x][y] = !univers[x][y];
+    document.querySelector("#univers-container").innerHTML = '';
+    dibuixaUniversAmbEstat(univers);
+  }
+});
