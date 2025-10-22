@@ -1,0 +1,18 @@
+.univers {
+  display: flex;
+  flex-direction: column;
+}
+.fila {
+  display: flex;
+}
+.celula {
+  width: 10px;
+  height: 10px;
+  border: 1px solid #ccc;
+}
+.viva {
+  background-color: green;
+}
+.muerta {
+  background-color: black;
+}

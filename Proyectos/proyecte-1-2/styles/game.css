@@ -1,13 +1,30 @@
-#ContenedorDelJuego {
+
+#game-board {
   display: grid;
-  grid-template-columns: repeat(10, 30px); 
-  grid-template-rows: repeat(10, 30px);    
+  grid-template-columns: repeat(10, 24px);
+  grid-template-rows: repeat(10, 24px);
   gap: 2px;
+  background: #222;
+  border: 2px solid #ffe600;
+  border-radius: 8px;
+  margin: 0 auto;
 }
 
+
 .celda {
-  width: 30px;
-  height: 30px;
-  background: lightgray;
-  border: 1px solid #aaa;
+  width: 24px;
+  height: 24px;
+  border: 1px solid #444;
+  box-sizing: border-box;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.8em;
+}
+
+
+.buit {
+  background: #222;
 }
