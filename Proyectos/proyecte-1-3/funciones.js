@@ -1,4 +1,4 @@
-//Dibujar univers
+//Dibujar 
 export function dibuixaUnivers(matriu) {
   let univers = '<div class="univers">';
   for (let i = 0; i < matriu.length; i++) {
@@ -84,4 +84,50 @@ console.log(comptarVeinsVius(matriu, 0, 0)); // 2
 console.log(comptarVeinsVius(matriu, 1, 1)); // 3
 console.log(comptarVeinsVius(matriu, 2, 2)); // 1
 
+// Funció evolucionarCelula
+export function evolucionarCelula(matriu, x, y) {
+    const estatActual = matriu[x][y]; // true (viva) o false (morta)
+    const veinsVius = comptarVeinsVius(matriu, x, y);
 
+    if (estatActual) {
+        // Cèl·lula viva
+        if (veinsVius < 2) return false; // solitud
+        if (veinsVius === 2 || veinsVius === 3) return true; // sigue viva
+        return false; // poblacion excesiva
+    } else {
+        //celula muerta
+        if (veinsVius === 3) return true; // reproducció
+        return false;
+    }
+}
+
+// Funció crearMatriuEvolucionada
+export function crearMatriuEvolucionada(matriuActual) {
+    let files = matriuActual.length;
+    let columnes = matriuActual[0].length;
+    let novaMatriu = [];
+
+    for (let i = 0; i < files; i++) {
+        let novaFila = [];
+        for (let j = 0; j < columnes; j++) {
+            let nouEstat = evolucionarCelula(matriuActual, i, j);
+            novaFila.push(nouEstat);
+        }
+        novaMatriu.push(novaFila);
+    }
+
+    return novaMatriu;
+}
+
+// Funció copiarMatriu
+export function copiarMatriu(matriuOrigen, matriuDesti) {
+    matriuDesti.length = 0; // buidar la matriu de destí
+
+    for (let i = 0; i < matriuOrigen.length; i++) {
+        let filaCopiada = [];
+        for (let j = 0; j < matriuOrigen[i].length; j++) {
+            filaCopiada.push(matriuOrigen[i][j]);
+        }
+        matriuDesti.push(filaCopiada);
+    }
+} 
